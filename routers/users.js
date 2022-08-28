@@ -49,9 +49,9 @@ router.patch('/:id', async (req, res) => {
                 const user = await User.findById(req.params.id);
                 if (user != null) {
 
-                        console.log('User is not null'+ user._id);
+                        console.log('User is not null' + user._id);
 
-                        const updatedUser = new User ({
+                        const updatedUser = new User({
                                 firstName: req.body.firstName,
                                 surname: req.body.surname,
                                 gender: req.body.gender,
@@ -59,7 +59,7 @@ router.patch('/:id', async (req, res) => {
                                 password: req.body.password,
                                 phoneNumber: req.body.phoneNumber,
                                 email: req.body.email
-                        })
+                        });
 
                         const result = await user.save();
                         res.json(result);
@@ -71,8 +71,14 @@ router.patch('/:id', async (req, res) => {
         }
 });
 
-router.delete("/", async (req, res) => {
-
+router.delete("/:id", async (req, res) => {
+        try {
+                const user = await User.findById(req.params.id);
+                const result = await user.delete(user);
+                res.json(result);       
+        } catch (err) {
+                res.send("Error : " + err);
+        }
 });
 
 
