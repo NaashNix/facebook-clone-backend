@@ -61,7 +61,7 @@ router.patch('/:id', async (req, res) => {
                                 email: req.body.email
                         });
 
-                        const result = await user.save();
+                        const result = await updatedUser.save();
                         res.json(result);
 
 
