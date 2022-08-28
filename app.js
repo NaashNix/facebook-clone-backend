@@ -1,5 +1,5 @@
 const express = require("express");
-const { json } = require('express');
+// const { json } = require('express');
 const mongoose = require("mongoose");
 const url = "mongodb://localhost/facebook";
 const app = express();

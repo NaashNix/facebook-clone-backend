@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 });
 
-router.post('/', async (res, req) => {
+router.post("/", async (req, res) => {
 
         const user = new User({
                 firstName: req.body.firstName,
@@ -26,14 +26,54 @@ router.post('/', async (res, req) => {
                 email: req.body.email
         });
 
-
         try {
-                const saved = await user.save()
-                res.json(saved);      
-        } catch (error){
-                res.send('Error')
+                const saved = await user.save();
+                res.json(saved);
+        } catch (error) {
+                res.send('Error');
         }
 
 });
+
+router.get('/:id', async (req, res) => {
+        try {
+                const user = await User.findById(req.params.id);
+                res.json(user);
+        } catch (error) {
+                res.send(error);
+        }
+});
+
+router.patch('/:id', async (req, res) => {
+        try {
+                const user = await User.findById(req.params.id);
+                if (user != null) {
+
+                        console.log('User is not null'+ user._id);
+
+                        const updatedUser = new User ({
+                                firstName: req.body.firstName,
+                                surname: req.body.surname,
+                                gender: req.body.gender,
+                                birthday: req.body.birthday,
+                                password: req.body.password,
+                                phoneNumber: req.body.phoneNumber,
+                                email: req.body.email
+                        })
+
+                        const result = await user.save();
+                        res.json(result);
+
+
+                }
+        } catch (error) {
+                res.send(error);
+        }
+});
+
+router.delete("/", async (req, res) => {
+
+});
+
 
 module.exports = router;
