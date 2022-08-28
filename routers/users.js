@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const Post = require('../models/post');
+const { db } = require('../models/user');
 
 
 router.get('/', async (req, res) => {
@@ -13,6 +15,18 @@ router.get('/', async (req, res) => {
         }
 
 });
+
+router.get('/posts/:id',async (req,res)=>{
+        const userID = req.params.id;
+
+        try{
+                const posts = await Post.find({userID : userID});
+                res.json(posts);
+        }catch (err){
+                res.send(err);
+        }
+        
+})
 
 router.post("/", async (req, res) => {
 
